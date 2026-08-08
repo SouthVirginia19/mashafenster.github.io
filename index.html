@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes" />
+    <title>Для лучшей Маши · год нашей дружбы</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500&display=swap" rel="stylesheet">
+    <style>
+        /* ——— reset & base ——— */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 300;
+            background: #f8f4f0;
+            color: #3d2c28;
+            line-height: 1.6;
+            padding: 30px 20px 60px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1060px;
+            margin: 0 auto;
+        }
+
+        /* ——— типографика ——— */
+        h1, h2, h3, .serif {
+            font-family: 'Playfair Display', 'Georgia', serif;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+        }
+
+        .serif-italic {
+            font-family: 'Playfair Display', 'Georgia', serif;
+            font-style: italic;
+            font-weight: 400;
+        }
+
+        /* ——— главная карточка ——— */
+        .main-card {
+            background: rgba(255, 252, 250, 0.82);
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            border-radius: 40px;
+            padding: 44px 40px 40px;
+            box-shadow: 0 20px 50px rgba(100, 70, 60, 0.08), 0 6px 18px rgba(120, 90, 80, 0.04);
+            border: 1px solid rgba(220, 200, 190, 0.25);
+            transition: all 0.2s;
+        }
+
+        @media (max-width: 640px) {
+            body { padding: 16px 12px 40px; }
+            .main-card { padding: 28px 18px 28px; border-radius: 28px; }
+        }
+
+        /* ——— hero (вступление) ——— */
+        .hero {
+            margin-bottom: 52px;
+            text-align: center;
+            padding: 0 6px;
+        }
+
+        .hero__label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #b29286;
+            margin-bottom: 12px;
+            font-weight: 400;
+        }
+
+        .hero__title {
+            font-size: clamp(2.6rem, 8vw, 4.6rem);
+            font-weight: 400;
+            color: #3d2c28;
+            line-height: 1.1;
+            margin-bottom: 18px;
+        }
+
+        .hero__title .accent {
+            color: #b27a6a;
+            font-style: italic;
+        }
+
+        .hero__description {
+            max-width: 620px;
+            margin: 0 auto 8px;
+            font-size: 1.15rem;
+            font-weight: 300;
+            color: #5f4540;
+            line-height: 1.7;
+        }
+
+        .hero__description .flower-scent {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: #b27a6a;
+        }
+
+        .hero__meta {
+            margin-top: 14px;
+            font-size: 0.95rem;
+            color: #9a7a6e;
+            letter-spacing: 0.5px;
+            border-top: 1px solid rgba(200, 175, 165, 0.2);
+            padding-top: 16px;
+            display: inline-block;
+        }
+
+        .hero__meta span {
+            margin: 0 10px;
+        }
+
+        /* ——— секции ——— */
+        section {
+            margin-bottom: 52px;
+            opacity: 0;
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        section:nth-child(2) { animation-delay: 0.08s; }
+        section:nth-child(3) { animation-delay: 0.16s; }
+        section:nth-child(4) { animation-delay: 0.24s; }
+
+        @keyframes fadeUp {
+            0% { opacity: 0; transform: translateY(24px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 400;
+            color: #3d2c28;
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border-bottom: 1px solid rgba(200, 175, 165, 0.2);
+            padding-bottom: 14px;
+            letter-spacing: -0.01em;
+        }
+
+        .section-title .num {
+            font-size: 0.9rem;
+            font-weight: 300;
+            color: #b29286;
+            margin-right: 4px;
+        }
+
+        /* ——— галерея (увеличенные фото) ——— */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 24px;
+        }
+
+        .gallery-item {
+            border-radius: 24px;
+            overflow: hidden;
+            background: #f5ede9;
+            border: 1px solid #e6d6ce;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(120, 90, 80, 0.03);
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 32px rgba(100, 70, 60, 0.08);
+            border-color: #d0b8ae;
+        }
+
+        .gallery-item img {
+            display: block;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            transition: 0.3s;
+            pointer-events: none; /* чтобы клик срабатывал на всю карточку */
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.02);
+        }
+
+        .gallery-item .caption {
+            padding: 12px 14px 14px;
+            font-size: 0.9rem;
+            color: #4d3a35;
+            background: #faf5f2;
+            border-top: 1px solid #e6d6ce;
+            font-weight: 400;
+            letter-spacing: 0.1px;
+        }
+
+        .gallery-item .caption small {
+            display: block;
+            font-size: 0.7rem;
+            color: #a88478;
+            font-weight: 300;
+            margin-top: 2px;
+        }
+
+        /* ——— истории ——— */
+        .stories-list {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .story-card {
+            background: rgba(250, 242, 238, 0.5);
+            backdrop-filter: blur(2px);
+            padding: 22px 28px;
+            border-radius: 28px;
+            border-left: 5px solid #dcc2b8;
+            transition: 0.25s ease;
+            box-shadow: 0 2px 8px rgba(120, 90, 80, 0.02);
+        }
+
+        .story-card:hover {
+            background: rgba(248, 238, 232, 0.7);
+            border-left-color: #c09a8a;
+            transform: translateX(4px);
+        }
+
+        .story-card h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #4d3a35;
+            margin-bottom: 6px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .story-card p {
+            color: #4d3a35;
+            font-weight: 300;
+            line-height: 1.7;
+            font-size: 0.98rem;
+        }
+
+        .story-card .meta {
+            font-size: 0.75rem;
+            color: #a88478;
+            margin-top: 10px;
+            font-style: italic;
+            border-top: 1px dashed #e0cec5;
+            padding-top: 10px;
+            text-align: right;
+        }
+
+        /* ——— цитаты ——— */
+        .quotes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 22px;
+        }
+
+        .quote-card {
+            background: rgba(250, 242, 238, 0.4);
+            backdrop-filter: blur(2px);
+            padding: 24px 22px;
+            border-radius: 28px;
+            border: 1px solid #e6d6ce;
+            transition: 0.25s ease;
+            box-shadow: 0 4px 12px rgba(120, 90, 80, 0.02);
+        }
+
+        .quote-card:hover {
+            background: rgba(248, 236, 230, 0.6);
+            transform: translateY(-4px);
+            border-color: #d0b8ae;
+        }
+
+        .quote-card blockquote {
+            font-size: 1.05rem;
+            font-weight: 300;
+            color: #3d2c28;
+            line-height: 1.6;
+            font-style: italic;
+            quotes: "“" "”";
+        }
+
+        .quote-card blockquote::before {
+            content: "“";
+            font-size: 1.6rem;
+            color: #b27a6a;
+            margin-right: 4px;
+            font-style: normal;
+        }
+
+        .quote-card blockquote::after {
+            content: "”";
+            font-size: 1.6rem;
+            color: #b27a6a;
+            margin-left: 4px;
+            font-style: normal;
+        }
+
+        .quote-card .author {
+            margin-top: 14px;
+            font-size: 0.8rem;
+            color: #8a6e62;
+            border-top: 1px solid #e0cec5;
+            padding-top: 12px;
+            font-weight: 300;
+            letter-spacing: 0.3px;
+        }
+
+        /* ——— подвал ——— */
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #a88478;
+            border-top: 1px solid rgba(200, 175, 165, 0.15);
+            padding-top: 26px;
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            font-weight: 300;
+            letter-spacing: 0.3px;
+        }
+
+        .footer span {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* ——— LIGHTBOX ——— */
+        #lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(30, 20, 18, 0.85);
+            backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            cursor: pointer;
+        }
+
+        #lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #lightbox img {
+            max-width: 92vw;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            cursor: default;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        #lightbox.active img {
+            transform: scale(1);
+        }
+
+        #lightbox .close-btn {
+            position: absolute;
+            top: 28px;
+            right: 40px;
+            font-size: 2.6rem;
+            font-weight: 300;
+            color: #fff;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(4px);
+            line-height: 1;
+        }
+
+        #lightbox .close-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        @media (max-width: 640px) {
+            #lightbox .close-btn {
+                top: 16px;
+                right: 16px;
+                font-size: 2rem;
+                width: 44px;
+                height: 44px;
+            }
+            #lightbox img {
+                max-width: 96vw;
+                max-height: 80vh;
+            }
+        }
+
+        /* ——— адаптив ——— */
+        @media (max-width: 700px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                gap: 16px;
+            }
+            .story-card { padding: 18px 20px; }
+            .quotes-grid { grid-template-columns: 1fr; }
+            .hero__description { font-size: 1rem; }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            .section-title { font-size: 1.3rem; }
+        }
+
+        /* ——— маленькие штрихи ——— */
+        .divider {
+            width: 40px;
+            height: 2px;
+            background: #dcc2b8;
+            margin: 0 auto 16px;
+        }
+
+        .text-muted {
+            color: #9a7a6e;
+        }
+
+        img {
+            border-radius: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="main-card">
+
+        <!-- ====== ВСТУПЛЕНИЕ ====== -->
+        <header class="hero">
+            <div class="hero__label">для лучшей маши на свете</div>
+            <h1 class="hero__title">
+                <span class="accent">Наша</span> дружба
+            </h1>
+            <div class="divider"></div>
+            <p class="hero__description">
+                <span class="flower-scent">Миленькая девочка, пахнущая цветами и утренним рассветом</span> — 
+                так я кратко описываю ту, кого я сегодня хочу поздравить. 
+                Маша, ты пришла так неожиданно в мою жизнь, но запомнилась самым ярким воспоминанием в моей голове. 
+                С тех пор каждый миг с тобой — как луч солнца, освещающий мне мир.
+            </p>
+            <div class="hero__meta">
+                <span>✦ Год знакомства</span>
+                <span>2025 — 2026</span>
+                <span>✦</span>
+            </div>
+        </header>
+
+        <!-- ====== Наши кадры  ====== -->
+        <section>
+            <h2 class="section-title">
+                <span class="num">01</span> Наши кадры
+            </h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="photos/mashaandi.jpg" alt="первая встреча" loading="lazy" />
+                    <div class="caption">Первая встреча <small>Август 2025</small></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="photos/bye.png" alt="Первое Прощай" loading="lazy" />
+                    <div class="caption">Первое прощание <small>Август 2025</small></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="photos/oneyear.jpg" alt="Год ожидания" loading="lazy" />
+                    <div class="caption">Разлука длинною вечность <small>Целый 2025</small></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="photos/letovo2026.jpg" alt="Летово 2026" loading="lazy" />
+                    <div class="caption">Летняя встреча <small>Июль 2026</small></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="photos/disco.png" alt="Дискотека ты и я" loading="lazy" />
+                    <div class="caption">Дискотеки <small>Июль 2026</small></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="photos/PROGULKA.jpg" alt="Прогулка" loading="lazy" />
+                    <div class="caption">Прогулки <small>Август 2026</small></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="photos/gallery.png" alt="Третьяковка" loading="lazy" />
+                    <div class="caption">Moscow <small>Август 2026</small></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="photos/lovein.jpg" alt="Москва и мы" loading="lazy" />
+                    <div class="caption">Moscow-2 <small>Август 2026</small></div>
+                </div>
+                <div class="gallery-item">
+                    <img src="photos/cyprus.jpg" alt="???" loading="lazy" />
+                    <div class="caption">??? <small>??????? 2026</small></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== Наши Истории ====== -->
+        <section>
+            <h2 class="section-title">
+                <span class="num">02</span> Наши истории
+            </h2>
+            <div class="stories-list">
+                <div class="story-card">
+                    <h3>Как мы встретились</h3>
+                    <p>Тот день начался сумбурно и неожиданно, но продолжился теплым общением с самой красивой девушкой на свете. Помню первые дни как вчера.</p>
+                    <div class="meta">Лето 2025</div>
+                </div>
+                <div class="story-card">
+                    <h3>Наша первая прогулка</h3>
+                    <p>Вместо концерта мы пошли гулять по Летово, попали под теплый дождь, но это не мешало нам наслаждаться прекрасным моментом вместе.</p>
+                    <div class="meta">Лето 2026</div>
+                </div>
+                <div class="story-card">
+                    <h3>Первая встреча вне школы</h3>
+                    <p>Прогулка по родной нам Москве, Третьяковская галерея, кино... Все было прекрасно, но ничего и никогда не сравниться с тобой и твоей красотой.</p>
+                    <div class="meta">Лето 2026</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== Безумно скучаю ====== -->
+        <section>
+            <h2 class="section-title">
+                <span class="num">03</span> Безумно скучаю
+            </h2>
+            <div class="quotes-grid">
+                <div class="quote-card">
+                    <blockquote>Дружба — это когда один человек — целый мир для другого</blockquote>
+                    <div class="author">Для тебя, Машуля</div>
+                </div>
+                <div class="quote-card">
+                    <blockquote>Пусть каждый день будет таким же тёплым, как твои объятия</blockquote>
+                    <div class="author">Спасибо тебе</div>
+                </div>
+                <div class="quote-card">
+                    <blockquote>Ты — лучшее, что случилось со мной за этот год</blockquote>
+                    <div class="author">Бесконечно благодарю</div>
+                </div>
+                <div class="quote-card">
+                    <blockquote>Ты — красивее, любого цветка в этом мире</blockquote>
+                    <div class="author">Пахнешь спокойствием</div>
+                </div>
+                <div class="quote-card">
+                    <blockquote>Пусть наша дружба сияет ярче всех звёзд</blockquote>
+                    <div class="author">И это только наше начало</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== ПОДВАЛ ====== -->
+        <div class="footer">
+            <span>✦ Сделано с любовью для Машули ✦</span>
+            <span>2025 — 2026</span>
+            <span>навсегда, твой Дениска</span>
+        </div>
+
+    </div>
+    <!-- end main-card -->
+</div>
+<!-- end container -->
+
+<!-- ====== LIGHTBOX ====== -->
+<div id="lightbox">
+    <span class="close-btn">&times;</span>
+    <img src="" alt="увеличенное фото" />
+</div>
+
+<script>
+    (function() {
+        // ——— плавное появление фото ———
+        const images = document.querySelectorAll('.gallery-item img');
+        images.forEach((img, index) => {
+            img.style.opacity = '0';
+            img.style.transition = 'opacity 0.6s ease';
+            setTimeout(() => {
+                img.style.opacity = '1';
+            }, 200 + index * 80);
+        });
+
+        // ——— LIGHTBOX ———
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = lightbox.querySelector('img');
+        const closeBtn = lightbox.querySelector('.close-btn');
+
+        // открыть при клике на карточку галереи (не на саму картинку, чтобы не мешать)
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        galleryItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                // если клик по картинке или по всей карточке — открываем
+                const img = this.querySelector('img');
+                if (img) {
+                    lightboxImg.src = img.src;
+                    lightboxImg.alt = img.alt || 'фото';
+                    lightbox.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+        });
+
+        // закрыть по клику на фон (сам lightbox)
+        lightbox.addEventListener('click', function(e) {
+            if (e.target === this || e.target === lightboxImg || e.target.tagName === 'IMG') {
+                // но если клик на изображение, то не закрываем (пусть остаётся)
+                if (e.target === lightboxImg) return;
+                closeLightbox();
+            }
+        });
+
+        // закрыть по кнопке
+        closeBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            closeLightbox();
+        });
+
+        // закрыть по Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                closeLightbox();
+            }
+        });
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+            // очищаем src, чтобы не грузить лишнее
+            // но можно оставить
+        }
+
+        // ——— плавное появление hero ———
+        const heroDesc = document.querySelector('.hero__description');
+        if (heroDesc) {
+            heroDesc.style.opacity = '0';
+            heroDesc.style.transition = 'opacity 0.8s ease';
+            setTimeout(() => {
+                heroDesc.style.opacity = '1';
+            }, 300);
+        }
+
+        console.log('🌸 Для лучшей подруги — с теплом и светом.');
+    })();
+</script>
+
+</body>
+</html>
