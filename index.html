@@ -551,6 +551,165 @@
             font-size: 0.95rem;
         }
     }
+    /* ——— обновлённый плеер с индикацией ——— */
+.player-container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(250, 242, 238, 0.6);
+    backdrop-filter: blur(4px);
+    padding: 14px 22px;
+    border-radius: 60px;
+    border: 1px solid #e6d6ce;
+    box-shadow: 0 4px 16px rgba(120, 90, 80, 0.04);
+    transition: 0.2s;
+    max-width: 520px;
+    margin: 0 auto;
+}
+
+.player-container:hover {
+    background: rgba(248, 238, 232, 0.75);
+    border-color: #d0b8ae;
+}
+
+.player-icon {
+    font-size: 1.4rem;
+    color: #b27a6a;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(200, 175, 165, 0.15);
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.player-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.player-title {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: #3d2c28;
+    letter-spacing: 0.2px;
+    font-family: 'Playfair Display', serif;
+}
+
+.player-artist {
+    font-size: 0.75rem;
+    color: #9a7a6e;
+    font-weight: 300;
+    letter-spacing: 0.2px;
+}
+
+.player-status {
+    font-size: 0.65rem;
+    color: #b27a6a;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+    margin-top: 2px;
+    transition: color 0.3s;
+}
+
+.player-status.playing {
+    color: #b27a6a;
+    font-weight: 500;
+}
+
+.player-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+/* ——— волны (эквалайзер) ——— */
+.wave-indicator {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    height: 24px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.wave-indicator.active {
+    opacity: 1;
+}
+
+.wave-indicator span {
+    display: block;
+    width: 4px;
+    background: #b27a6a;
+    border-radius: 2px;
+    height: 6px;
+    transition: height 0.2s;
+}
+
+.wave-indicator.active span {
+    animation: wave 0.6s ease-in-out infinite alternate;
+}
+
+.wave-indicator span:nth-child(1) { animation-delay: 0s; }
+.wave-indicator span:nth-child(2) { animation-delay: 0.15s; }
+.wave-indicator span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes wave {
+    0% { height: 6px; }
+    100% { height: 22px; }
+}
+
+/* ——— кнопка ——— */
+.player-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    background: #dcc2b8;
+    color: #faf5f2;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(180, 140, 130, 0.15);
+}
+
+.player-btn:hover {
+    background: #c09a8a;
+    transform: scale(1.05);
+}
+
+.player-btn:active {
+    transform: scale(0.92);
+}
+
+.player-btn.playing {
+    background: #b27a6a;
+}
+
+@media (max-width: 480px) {
+    .player-container {
+        padding: 12px 16px;
+        gap: 12px;
+    }
+    .player-title {
+        font-size: 0.8rem;
+    }
+    .player-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 0.95rem;
+    }
+    .wave-indicator span {
+        width: 3px;
+    }
+}
     </style>
 </head>
 <body>
@@ -674,21 +833,27 @@
                 </div>
             </div>
         </section>
-        <!-- ====== ПЛЕЕР С ПЕСНЕЙ ====== -->
+<!-- ====== ПЛЕЕР С ПЕСНЕЙ (обновлённый) ====== -->
 <div class="player-section">
     <div class="player-container">
         <div class="player-icon">
             <i class="fas fa-music"></i>
         </div>
         <div class="player-info">
-            <div class="player-title">песня для нас</div>
-            <div class="player-artist">исполнитель — название</div>
+            <div class="player-title">Наша песня</div>
+            <div class="player-artist">FEDUK — Хлопья летят наверх</div>
+            <div class="player-status" id="playerStatus">на паузе</div>
         </div>
-        <button class="player-btn" id="playBtn" aria-label="Play/pause">
-            <i class="fas fa-play"></i>
-        </button>
+        <div class="player-controls">
+            <div class="wave-indicator" id="waveIndicator">
+                <span></span><span></span><span></span>
+            </div>
+            <button class="player-btn" id="playBtn" aria-label="Play/pause">
+                <i class="fas fa-play"></i>
+            </button>
+        </div>
     </div>
-    <audio id="friendshipSong" src="https://cdn.pixabay.com/audio/2022/03/10/audio_c8c8b7b0b1.mp3" preload="metadata"></audio>
+    <audio id="friendshipSong" src="fedk.mp3" preload="metadata"></audio>
 </div>
 
         <!-- ====== ПОДВАЛ ====== -->
@@ -779,33 +944,49 @@
                 heroDesc.style.opacity = '1';
             }, 300);
         }
-            // ===== ПЛЕЕР =====
-        (function() {
-            const audio = document.getElementById('friendshipSong');
-            const playBtn = document.getElementById('playBtn');
-            const icon = playBtn.querySelector('i');
-        
-          if (!audio || !playBtn) return;
-        
-            playBtn.addEventListener('click', function(e) {
-                 e.stopPropagation();
-          if (audio.paused) {
-                    audio.play().catch(() => {});
-                    playBtn.classList.add('playing');
-                    icon.className = 'fas fa-pause';
-                } else {
-                    audio.pause();
-                    playBtn.classList.remove('playing');
-                    icon.className = 'fas fa-play';
-                }
-            });
+// ===== ПЛЕЕР С ИНДИКАЦИЕЙ =====
+(function() {
+    const audio = document.getElementById('friendshipSong');
+    const playBtn = document.getElementById('playBtn');
+    const icon = playBtn.querySelector('i');
+    const wave = document.getElementById('waveIndicator');
+    const statusText = document.getElementById('playerStatus');
 
-    audio.addEventListener('ended', function() {
-        playBtn.classList.remove('playing');
-        icon.className = 'fas fa-play';
+    if (!audio || !playBtn) return;
+
+    function updateUI(playing) {
+        if (playing) {
+            playBtn.classList.add('playing');
+            icon.className = 'fas fa-pause';
+            wave.classList.add('active');
+            statusText.textContent = '♫ сейчас играет';
+            statusText.classList.add('playing');
+        } else {
+            playBtn.classList.remove('playing');
+            icon.className = 'fas fa-play';
+            wave.classList.remove('active');
+            statusText.textContent = 'на паузе';
+            statusText.classList.remove('playing');
+        }
+    }
+
+    playBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (audio.paused) {
+            audio.play().catch(() => {});
+            updateUI(true);
+        } else {
+            audio.pause();
+            updateUI(false);
+        }
     });
 
-    // опционально: если нужно, чтобы при клике на плеер не закрывался lightbox
+    audio.addEventListener('ended', function() {
+        updateUI(false);
+    });
+
+    // Инициализация
+    updateUI(false);
 })();
 
         console.log('🌸 Для лучшей подруги — с теплом и светом.');
