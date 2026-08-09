@@ -779,6 +779,34 @@
                 heroDesc.style.opacity = '1';
             }, 300);
         }
+            // ===== ПЛЕЕР =====
+        (function() {
+            const audio = document.getElementById('friendshipSong');
+            const playBtn = document.getElementById('playBtn');
+            const icon = playBtn.querySelector('i');
+        
+          if (!audio || !playBtn) return;
+        
+            playBtn.addEventListener('click', function(e) {
+                 e.stopPropagation();
+          if (audio.paused) {
+                    audio.play().catch(() => {});
+                    playBtn.classList.add('playing');
+                    icon.className = 'fas fa-pause';
+                } else {
+                    audio.pause();
+                    playBtn.classList.remove('playing');
+                    icon.className = 'fas fa-play';
+                }
+            });
+
+    audio.addEventListener('ended', function() {
+        playBtn.classList.remove('playing');
+        icon.className = 'fas fa-play';
+    });
+
+    // опционально: если нужно, чтобы при клике на плеер не закрывался lightbox
+})();
 
         console.log('🌸 Для лучшей подруги — с теплом и светом.');
     })();
